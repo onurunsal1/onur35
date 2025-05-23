@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akşam Dışarı Çıkalım mı?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #fce3ec 0%, #f9e7fe 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 40px;
+      color: #c94f7c;
+      transition: all 0.3s ease;
+    }
+    .button {
+      padding: 15px 30px;
+      font-size: 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .yes {
+      background-color: #ff88b8;
+      color: white;
+    }
+    .no {
+      background-color: #dddddd;
+      color: #333;
+    }
+    .hidden {
+      display: none;
+    }
+    #result {
+      margin-top: 40px;
+      font-size: 22px;
+      color: #6a1b4d;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #ffffffcc;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff88b8;
+      transform: rotate(45deg);
+      animation: float 10s infinite ease-in;
+      opacity: 0.6;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff88b8;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+      }
+      100% {
+        transform: translateY(-10vh) rotate(45deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts">
+    <div class="heart" style="left:10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left:20%; animation-delay: 2s;"></div>
+    <div class="heart" style="left:40%; animation-delay: 4s;"></div>
+    <div class="heart" style="left:60%; animation-delay: 1s;"></div>
+    <div class="heart" style="left:80%; animation-delay: 3s;"></div>
+  </div>
+
+  <h1 id="mainText">Akşam dışarı çıkalım mı?</h1>
+  <button class="button yes" id="yesBtn">Evet ❤️</button>
+  <button class="button no" id="noBtn">Hayır ❌</button>
+  <div id="result" class="hidden"></div>
+
+  <script>
+    const texts = [
+      "AMA ÇOK ÖZLEDİM SENİ",
+      "UZUN ZAMANDIR GÖRÜŞMÜYORUZ EMİN MİSİN",
+      "BAAAAKKK EMİN MİSİN",
+      "SON KARARIN MI",
+      "SİLAH ZORUYLA MI BASTIRIYORLAR YOKSA SANA HAYIRA"
+    ];
+    let noCount = 0;
+
+    const mainText = document.getElementById("mainText");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const result = document.getElementById("result");
+
+    noBtn.addEventListener("click", () => {
+      if (noCount < texts.length) {
+        mainText.innerText = texts[noCount];
+        noCount++;
+        yesBtn.style.fontSize = (20 + noCount * 6) + "px";
+        noBtn.style.fontSize = (20 - noCount * 2) + "px";
+        if (parseInt(noBtn.style.fontSize) <= 10) {
+          noBtn.disabled = true;
+        }
+      } else {
+        mainText.innerText = texts[texts.length - 1];
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      mainText.style.display = "none";
+      result.classList.remove("hidden");
+      result.innerHTML = "Hayır demeyeceğini biliyordum! 😍<br><br>Ben de seni özlemiştim zaten.<br><br>Şimdi sana saati yazıyorum :) ⏰";
+    });
+  </script>
+</body>
+</html>
